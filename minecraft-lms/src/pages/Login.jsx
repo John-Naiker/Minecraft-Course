@@ -15,11 +15,17 @@ export default function Login() {
     e.preventDefault();
 
     if (username === 'user' && password === 'password') {
-      // Get timestamp from URL or use current time
-      const startTime = searchParams.get('startTime') || Date.now().toString();
+      // Get the fixed date/time from URL (format: YYYY-MM-DD HH:mm)
+      const startTime = searchParams.get('startTime');
       
-      // Store the start time in localStorage for use across the app
-      localStorage.setItem('sessionStartTime', startTime);
+      if (startTime) {
+        // Store the exact date/time string
+        localStorage.setItem('sessionStartTime', startTime);
+      } else {
+        // If no startTime provided, use current time
+        const now = new Date();
+        localStorage.setItem('sessionStartTime', now.toISOString());
+      }
       
       navigate('/intro');
     } else {
