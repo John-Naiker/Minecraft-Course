@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import Layout from '../components/Layout';
 import favicon from '../assets/RocketHour Favicon.svg';
 
 export default function Login() {
@@ -8,10 +9,18 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (username === 'user' && password === 'password') {
+      // Get timestamp from URL or use current time
+      const startTime = searchParams.get('startTime') || Date.now().toString();
+      
+      // Store the start time in localStorage for use across the app
+      localStorage.setItem('sessionStartTime', startTime);
+      
       navigate('/intro');
     } else {
       setError('Invalid credentials');
@@ -19,13 +28,8 @@ export default function Login() {
   };
 
   return (
-    <div style={{ width: '400px' }} className="mx-auto px-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="bg-[#03041A]/80 backdrop-blur-sm rounded-2xl p-8 border border-[#B95DCD]/10"
-      >
+    <Layout centered>
+      <div className="bg-[#03041A]/80 backdrop-blur-sm rounded-2xl p-8 border border-[#B95DCD]/10">
         {/* Logo */}
         <div className="flex justify-center mb-12">
           <img src={favicon} alt="RocketHour" className="h-8 w-8" />
@@ -109,7 +113,7 @@ export default function Login() {
             Sign in
           </button>
         </motion.form>
-      </motion.div>
-    </div>
+      </div>
+    </Layout>
   );
 }

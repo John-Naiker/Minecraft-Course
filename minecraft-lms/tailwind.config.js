@@ -7,12 +7,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#6D28D9', // Purple
-        secondary: '#DB2777', // Pink
-        dark: {
-          DEFAULT: '#111827',
-          lighter: '#1F2937',
-        },
+        primary: '#B95DCD', // Purple
+        secondary: '#748DF4', // Blue
+        dark: '#03041A',
+        'dark-lighter': '#0A0B2E',
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',

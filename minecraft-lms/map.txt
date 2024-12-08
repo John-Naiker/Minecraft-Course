@@ -1,0 +1,67 @@
+# Minecraft Learning Management System (LMS) - Codebase Map
+
+## Overview
+This is a React-based web application that serves as a learning management system for teaching programming through Minecraft. The application uses Vite as the build tool, Firebase for backend services, and features a modern UI with animations using Framer Motion.
+
+## Core Technologies
+- Frontend: React + Vite
+- Styling: TailwindCSS
+- Backend: Firebase (Auth + Firestore)
+- Animations: Framer Motion
+- Routing: React Router
+- Code Highlighting: React Syntax Highlighter
+
+## Architecture
+
+### 1. Authentication & User Management
+- Firebase handles user authentication
+- Two user roles: admin and student
+- User data stored in Firestore
+- Time-based access control for classes
+
+### 2. Main Components
+
+#### A. Pages
+1. `Login.jsx`
+   - User authentication entry point
+   - Handles credentials validation
+   - Redirects to intro on success
+
+2. `Intro.jsx`
+   - Welcome screen with countdown
+   - Transitions to setup page
+
+3. `Setup.jsx`
+   - Minecraft environment setup instructions
+   - Server connection details
+   - Performance optimization settings
+
+4. `Instructions.jsx`
+   - Building tutorials
+   - Video demonstrations
+   - Step-by-step guides
+
+5. `CodeSnippets.jsx`
+   - Displays executable Minecraft code
+   - Copy functionality
+   - Syntax highlighting
+
+#### B. Admin Section
+1. `AdminLayout.jsx`
+   - Admin dashboard structure
+   - Navigation sidebar
+   - Protected routes
+
+2. `Classes.jsx`
+   - Class management
+   - CRUD operations for classes
+   - Schedule management
+
+3. `Users.jsx`
+   - User management
+   - Role assignment
+   - Class enrollment
+
+### 3. Code Organization
+
+#### A. Source Structure 

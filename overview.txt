@@ -1,0 +1,81 @@
+MINECRAFT LMS - CODEBASE OVERVIEW
+
+1. Project Structure
+- React + Vite application
+- Firebase backend integration
+- Tailwind CSS for styling
+- Framer Motion for animations
+- React Router for navigation
+
+2. Key Features
+- User authentication system (Firebase)
+- Admin panel for managing classes and users
+- Interactive Minecraft code snippets
+- Step-by-step setup instructions
+- Guided learning flow (Login → Intro → Setup → Instructions → Code Snippets)
+
+3. Main Components
+a) Pages:
+- Login: User authentication
+- Intro: Welcome screen with countdown
+- Setup: Minecraft configuration instructions
+- Instructions: Building tutorials
+- CodeSnippets: Interactive code examples
+- Admin pages (Classes, Users)
+
+b) Components:
+- Layout: Common page structure
+- AdminLayout: Admin panel structure
+- CodeSnippets: Code display with syntax highlighting
+
+4. Technical Implementation
+- Firebase Authentication & Firestore database
+- Tailwind for responsive design
+- Motion animations for smooth transitions
+- Syntax highlighting for code snippets
+- Environment-specific configurations
+
+5. Styling Approach
+- Dark theme with professional gradients
+- Consistent color scheme:
+  * Primary: Purple (#B95DCD)
+  * Secondary: Blue (#748DF4)
+  * Background: Dark (#03041A)
+- Responsive design patterns
+- Custom animations and transitions
+
+6. Notable Features
+- Real-time code snippet copying
+- Interactive setup process
+- Admin class management
+- User role management
+- Minecraft server integration
+
+7. Development Tools
+- Vite for build process
+- ESLint for code quality
+- PostCSS for CSS processing
+- Firebase deployment configuration
+
+8. Security Considerations
+- Firebase authentication
+- Protected admin routes
+- Environment variable management
+- Secure deployment process
+
+9. File Organization
+/src
+  /assets      - Static resources
+  /components  - Reusable UI components
+  /contexts    - React contexts
+  /firebase    - Firebase configuration
+  /pages       - Main application pages
+  /llm_prompts - Minecraft code snippets
+
+10. Deployment
+- Firebase hosting configuration
+- Build process optimization
+- Route handling for SPA
+- Cache management
+
+This codebase represents a professional learning management system specifically designed for teaching Minecraft programming, with a focus on user experience and educational content delivery. 

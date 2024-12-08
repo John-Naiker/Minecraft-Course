@@ -1,130 +1,96 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import favicon from '../assets/RocketHour Favicon.svg';
+import { motion } from 'framer-motion';
+import Layout from '../components/Layout';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function Intro() {
-  const sessionTime = "14:00"; // Example session time
-  const [timeLeft, setTimeLeft] = useState(30); // 30 seconds
-  const [isSessionStarted, setIsSessionStarted] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds
   const navigate = useNavigate();
+  const { sessionStartTime } = useAuth();
 
   useEffect(() => {
+    if (timeLeft <= 0) {
+      navigate('/setup');
+      return;
+    }
+
     const timer = setInterval(() => {
-      setTimeLeft((prevTime) => {
-        if (prevTime <= 1) {
-          setIsSessionStarted(true);
-          clearInterval(timer);
-          return 0;
-        }
-        return prevTime - 1;
-      });
+      setTimeLeft(prev => prev - 1);
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [timeLeft, navigate]);
 
   const formatTime = (seconds) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
 
   return (
-    <div style={{ width: '600px' }} className="mx-auto px-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      >
-        {/* Logo */}
-        <div className="flex justify-center mb-10">
-          <img src={favicon} alt="RocketHour" className="h-8 w-8" />
-        </div>
+    <Layout>
+      <div className="max-w-2xl mx-auto text-center space-y-8">
+        {/* Welcome Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-[#B95DCD] to-[#748DF4] text-transparent bg-clip-text">
+            Welcome to RocketHour Minecraft!
+          </h1>
+          <p className="text-[#F1F2F0]/80 text-lg">
+            Get ready to start your coding adventure in Minecraft
+          </p>
+        </motion.div>
 
-        {/* Main Content */}
-        <div className="bg-[#03041A]/80 backdrop-blur-sm rounded-2xl p-8 border border-[#B95DCD]/10">
-          <div className="space-y-8">
-            {/* Timer Section */}
-            <div className="text-center">
-              <h2 className="text-[#F1F2F0] text-xl font-medium mb-3">
-                The session will start at {sessionTime}
-              </h2>
-              <div className="text-6xl font-bold bg-gradient-to-r from-[#B95DCD] to-[#748DF4] bg-clip-text text-transparent">
-                {formatTime(timeLeft)}
-              </div>
-            </div>
-
-            {/* Actions Section */}
-            <div className="space-y-4">
-              <a
-                href="https://meet.google.com/mem-cbhe-pow"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full bg-[#03041A] border border-[#F1F2F0]/10 text-[#F1F2F0] font-medium rounded-lg py-3 text-center transition-all duration-200 hover:bg-[#F1F2F0]/10"
-              >
-                Join Google Meet
-              </a>
-
-              <AnimatePresence>
-                {isSessionStarted ? (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="relative"
-                  >
-                    <motion.div
-                      initial={{ scale: 0.95, opacity: 0 }}
-                      animate={{ 
-                        scale: [0.95, 1.05, 0.95],
-                        opacity: [0.5, 0.8, 0.5]
-                      }}
-                      transition={{ 
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
-                      className="absolute inset-0 bg-gradient-to-r from-[#B95DCD] to-[#748DF4] rounded-lg blur-xl"
-                    />
-                    <motion.button
-                      onClick={() => navigate('/setup')}
-                      className="relative w-full bg-gradient-to-r from-[#B95DCD] via-[#9B6BE1] to-[#748DF4] text-white font-medium rounded-lg py-4 text-lg transition-all duration-200 hover:opacity-90 hover:scale-105 hover:shadow-lg"
-                    >
-                      Let's Go!
-                    </motion.button>
-                  </motion.div>
-                ) : (
-                  <button
-                    disabled
-                    className="w-full border border-[#F1F2F0]/10 text-[#F1F2F0]/40 font-medium rounded-lg py-3 cursor-not-allowed"
-                  >
-                    Waiting until start time...
-                  </button>
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* Checklist Section */}
-            <div className="space-y-3">
-              <h3 className="text-[#F1F2F0] font-medium">Before we begin:</h3>
-              <ul className="space-y-2 text-[#F1F2F0]/80">
-                <li className="flex items-center">
-                  <span className="text-[#C9E74C] mr-2">•</span>
-                  Ensure your webcam and microphone are working
-                </li>
-                <li className="flex items-center">
-                  <span className="text-[#C9E74C] mr-2">•</span>
-                  Use Chrome as your browser
-                </li>
-                <li className="flex items-center">
-                  <span className="text-[#C9E74C] mr-2">•</span>
-                  Close all unnecessary tabs and applications
-                </li>
-              </ul>
-            </div>
+        {/* Countdown Timer */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="bg-[#03041A]/80 backdrop-blur-sm rounded-2xl p-8 border border-[#B95DCD]/10"
+        >
+          <h2 className="text-2xl font-semibold mb-4">Class Starts In</h2>
+          <div className="text-5xl font-bold text-[#B95DCD]">
+            {formatTime(timeLeft)}
           </div>
-        </div>
-      </motion.div>
-    </div>
+        </motion.div>
+
+        {/* Instructions */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="space-y-6 text-left bg-[#03041A]/80 backdrop-blur-sm rounded-2xl p-8 border border-[#B95DCD]/10"
+        >
+          <h2 className="text-2xl font-semibold text-center mb-6">While You Wait</h2>
+          
+          <div className="space-y-4">
+            <p className="text-[#F1F2F0]/80">
+              Please complete these steps before we begin:
+            </p>
+            
+            <ol className="list-decimal list-inside space-y-4 text-[#F1F2F0]/80">
+              <li>
+                Open Google Chrome if you haven't already. 
+                <a 
+                  href="https://www.google.com/chrome" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="ml-2 text-[#748DF4] hover:text-[#748DF4]/80 transition-colors"
+                >
+                  Download Chrome →
+                </a>
+              </li>
+              <li>Make sure your Minecraft is ready and running</li>
+              <li>Have your notebook and pencil ready</li>
+              <li>Clear your desk of any distractions</li>
+            </ol>
+          </div>
+        </motion.div>
+      </div>
+    </Layout>
   );
 }

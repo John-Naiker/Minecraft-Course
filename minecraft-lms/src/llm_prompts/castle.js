@@ -1,6 +1,6 @@
-let startX = p.posX, startY = p.posY, startZ = p.posZ;
+const code = `let startX = p.posX, startY = p.posY, startZ = p.posZ;
 for (let i = 5; i > 0; i--) {
-    const message = ModAPI.reflect.getClassById("net.minecraft.util.ChatComponentText").constructors[0](ModAPI.util.str(`Building Castle in: ${i}`))
+    const message = ModAPI.reflect.getClassById("net.minecraft.util.ChatComponentText").constructors[0](ModAPI.util.str(\`Building Castle in: \${i}\`))
     p.addChatMessage(message)
     await new Promise(resolve => setTimeout(resolve, 1000));
 }
@@ -44,4 +44,6 @@ for (let x = startX; x <= startX + 10; x += 2) {
 for (let z = startZ; z <= startZ + 10; z += 2) {
     setBlockState(worldRef, blockPosConstructor(startX, startY + 5, z), b.stone_slab.getDefaultState().getRef(), 3);
     setBlockState(worldRef, blockPosConstructor(startX + 10, startY + 5, z), b.stone_slab.getDefaultState().getRef(), 3);
-}
+}`;
+
+export default code;
