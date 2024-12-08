@@ -14,7 +14,7 @@ export default function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (username === 'user' && password === 'password') {
+    if (username === 'teamcraft' && password === 'rockethour') {
       // Get the fixed date/time from URL (format: YYYY-MM-DD HH:mm)
       const startTime = searchParams.get('startTime');
       
